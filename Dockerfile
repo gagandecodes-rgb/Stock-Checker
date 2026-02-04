@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.41.2-jammy
+FROM mcr.microsoft.com/playwright:v1.58.1-jammy
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Kolkata
@@ -13,8 +13,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 COPY . /app
 
-# 🔥 Install Playwright as project dependency
-RUN npm init -y \
-    && npm install playwright
+# Install Playwright dependency (version will match the image)
+RUN npm init -y && npm install playwright@1.58.1
 
 CMD ["php", "index.php"]
