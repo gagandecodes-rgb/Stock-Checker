@@ -1,6 +1,6 @@
-FROM php:8.2-cli
+FROM php:8.2-cli-bullseye
 
-# 1️⃣ Install system dependencies (IMPORTANT)
+# System deps
 RUN apt-get update && apt-get install -y \
     git curl unzip wget gnupg \
     libpq-dev \
@@ -12,16 +12,14 @@ RUN apt-get update && apt-get install -y \
     nodejs npm \
     && rm -rf /var/lib/apt/lists/*
 
-# 2️⃣ Install PHP extensions
+# PHP extensions
 RUN docker-php-ext-install pdo pdo_pgsql
 
-# 3️⃣ Install Playwright
+# Playwright
 RUN npm install -g playwright
 RUN playwright install chromium
 
-# 4️⃣ App files
 WORKDIR /app
 COPY . /app
 
-# 5️⃣ Start bot
 CMD ["php", "index.php"]
